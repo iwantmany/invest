@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>내 맞춤 투자 & 정책 추천</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <!-- 헤더 -->
+  <header class="hero">
+    <div class="hero-content">
+      <div class="hero-badge">AI 맞춤 추천</div>
+      <h1>내 상황에 맞는<br /><span class="highlight">투자 & 정책</span> 찾기</h1>
+      <p class="hero-sub">나이와 금액을 입력하면 정부정책부터 투자상품까지<br />딱 맞는 것만 골라드려요</p>
+    </div>
+  </header>
+
+  <main class="container">
+
+    <!-- 입력 폼 -->
+    <section class="card input-card">
+      <h2 class="section-title">📋 내 정보 입력</h2>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="age">나이 <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input type="number" id="age" placeholder="예: 27" min="19" max="80" />
+            <span class="unit">세</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="monthly_amount">월 저축 가능 금액 <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input type="number" id="monthly_amount" placeholder="예: 300000" min="0" />
+            <span class="unit">원</span>
+          </div>
+          <p class="input-hint" id="monthly-display"></p>
+        </div>
+
+        <div class="form-group">
+          <label for="total_amount">현재 보유 투자금 <span class="required">*</span></label>
+          <div class="input-wrapper">
+            <input type="number" id="total_amount" placeholder="예: 5000000" min="0" />
+            <span class="unit">원</span>
+          </div>
+          <p class="input-hint" id="total-display"></p>
+        </div>
+
+        <div class="form-group">
+          <label>투자 위험 선호도 <span class="required">*</span></label>
+          <div class="risk-selector">
+            <button class="risk-btn" data-value="낮음">
+              <span class="risk-icon">🛡️</span>
+              <span class="risk-label">낮음</span>
+              <span class="risk-desc">안전하게</span>
+            </button>
+            <button class="risk-btn active" data-value="보통">
+              <span class="risk-icon">⚖️</span>
+              <span class="risk-label">보통</span>
+              <span class="risk-desc">균형있게</span>
+            </button>
+            <button class="risk-btn" data-value="높음">
+              <span class="risk-icon">🚀</span>
+              <span class="risk-label">높음</span>
+              <span class="risk-desc">공격적으로</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="recommend-btn" onclick="getRecommendations()">
+        <span class="btn-icon">✨</span>
+        맞춤 추천 받기
+      </button>
+    </section>
+
+    <!-- 로딩 -->
+    <div class="loading-wrapper" id="loading" style="display:none">
+      <div class="loading-spinner"></div>
+      <p>분석 중...</p>
+    </div>
+
+    <!-- 결과 -->
+    <div id="results" style="display:none">
+
+      <!-- 요약 배너 -->
+      <div class="summary-banner" id="summary-banner">
+        <div class="summary-icon">💡</div>
+        <p id="summary-text"></p>
+      </div>
+
+      <!-- 정부 정책 섹션 -->
+      <section>
+        <div class="section-header">
+          <h2>🏛️ 정부정책 추천</h2>
+          <span class="badge" id="policy-count"></span>
+        </div>
+        <p class="section-desc">신청 자격이 되는 정책이에요. 정부지원은 최우선으로 활용하세요!</p>
+        <div class="cards-grid" id="policy-cards"></div>
+        <div class="empty-state" id="policy-empty" style="display:none">
+          <p>🔍 현재 나이·금액 조건에 맞는 정책이 없어요</p>
+        </div>
+      </section>
+
+      <!-- 투자상품 섹션 -->
+      <section style="margin-top: 2.5rem;">
+        <div class="section-header">
+          <h2>📊 투자상품 추천</h2>
+          <span class="badge" id="invest-count"></span>
+        </div>
+        <p class="section-desc">위험 선호도와 연령에 맞게 추천한 상품이에요.</p>
+        <div class="cards-grid" id="invest-cards"></div>
+      </section>
+
+      <!-- 꿀팁 -->
+      <section class="tips-section">
+        <h3>💰 투자 꿀팁</h3>
+        <ul class="tips-list">
+          <li>정부정책 계좌를 먼저 채우고 → 나머지를 ETF에 투자하세요</li>
+          <li>ISA 계좌에 ETF를 넣으면 비과세 혜택까지 동시에 받을 수 있어요</li>
+          <li>연금저축 + IRP는 세액공제가 되므로 연말 전에 꼭 확인하세요</li>
+          <li>한 곳에 몰아넣지 말고, 3~4개 상품에 분산 투자를 권장해요</li>
+        </ul>
+      </section>
+
+    </div>
+
+  </main>
+
+  <footer class="footer">
+    <p>⚠️ 이 서비스는 정보 제공 목적이며, 투자 손실에 대한 법적 책임을 지지 않습니다.</p>
+    <p>정확한 정보는 각 금융기관 및 정부 공식 사이트를 통해 확인하세요.</p>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
